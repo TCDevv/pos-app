@@ -23,7 +23,7 @@ const Payment = ({ currentTable, currentProductList, selectedTables }) => {
     };
     const getTableName = useCallback(
         (tableId) => {
-            const tableName = selectedTables.find((item) => (item.id = tableId)).name;
+            const tableName = selectedTables.find((item) => item.id === tableId).name;
             return tableName.includes('HD') ? tableName : `Bàn ${tableName}`;
         },
         [selectedTables]

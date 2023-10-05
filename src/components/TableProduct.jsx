@@ -8,7 +8,7 @@ import { PAYMENTING } from '../utils/constants';
 import { setOrderProcess } from '../actions/orderActions';
 import { setCurrentProcess } from '../actions/processActions';
 
-const TableProduct = ({ data, removeProduct, currentTable, changeQuantity }) => {
+const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handleRemoveTable }) => {
     const dispatch = useDispatch();
 
     const columns = [
@@ -35,7 +35,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity }) => 
                 <>
                     <InputNumber
                         style={{ width: 70 }}
-                        defaultValue={quantity}
+                        value={quantity}
                         min={1}
                         onChange={(value) => changeQuantity(value, record, index)}
                     />
@@ -77,7 +77,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity }) => 
         <div className='table-product-container'>
             <div className='table-product'>
                 <div className='receipt-info'>
-                    <span>Số lượng sản phẩm: {data.length}</span>
+                    <span>Số lượng sản phẩm: {data.reduce((acc, curr) => acc + curr.quantity, 0)}</span>
                     <span>Thành tiền: {convertPrice(data.reduce((acc, curr) => acc + curr.subtotal, 0))}</span>
                 </div>
                 <Table columns={columns} dataSource={data} scroll={{ y: '40vh', x: 600 }} />
@@ -87,7 +87,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity }) => 
                     <Button type='primary' className='primary-btn'>
                         Đổi bàn
                     </Button>
-                    <Button danger type='primary'>
+                    <Button danger type='primary' onClick={() => handleRemoveTable()}>
                         Hủy
                     </Button>
                     <Button type='primary' className='primary-btn'>
