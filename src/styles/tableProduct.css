@@ -1,0 +1,31 @@
+.icon-delete{
+    font-size: 20px;
+    color: rgba(201, 46, 46, 0.853);
+    cursor: pointer;
+}
+.icon-delete:hover{
+    color: rgba(197, 72, 72, 0.853);
+}
+.table-product-container{
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.table-product{
+    width: 100%;
+}
+.receipt-info{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom:10px;
+}
+.primary-btn{
+    background: rgb(103, 58, 183);
+}
+.primary-btn:hover{
+    background: rgb(116, 79, 180)!important;
+}

@@ -1,0 +1,27 @@
+.menu-icon{
+   height: 40px;
+   width: 50px;
+   cursor: pointer;
+   color: #fff;
+}
+.menu-icon:hover{
+   color: #c09cff;
+}
+.receipt{
+   color: #fff;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   gap: 5px;
+   cursor: pointer;
+}
+.receipt:hover{
+   color: #c09cff;
+}
+.receipt .plus-icon{
+   font-size: 20px;
+}
+.link-header{
+   display: flex;
+   align-items: center;
+}

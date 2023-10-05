@@ -1,0 +1,114 @@
+.payment-info{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.payment-info .back-btn{
+    display: flex;
+    align-items: center;
+    gap:5px;
+    cursor: pointer;
+}
+.payment-info .total-payment{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.discount-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.discount-container .discount-picker{
+    width: 40%;
+}
+.discount-container .discount-picker .picker-container{
+    width: 100%;
+    overflow-x: scroll;
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+}
+.discount-container .discount-picker .picker-container::-webkit-scrollbar{
+    height: 5px;
+    background-color: #d2d2d2;
+}
+.discount-container .discount-picker .picker-container::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}
+.discount-container .discount-picker .picker-container .picker{
+    width: 50px;
+    background-color: #a9a9a9;
+    color: #fff;
+    border-radius: 20px;
+    padding: 0 5px;
+    cursor: pointer;
+}
+.discount-container .discount-input{
+    width: 30%;
+}
+.payment-method{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.payment-method .select-box{
+    width: 100px;
+}
+.cash-summary{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.cash-summary Input{
+    width: 150px;
+}
+.status-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.payment-action{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}
+.bill-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 70vh;
+    overflow-y: scroll;
+    width: 95%;
+    border: 1px solid #ccc;
+}
+.bill-container::-webkit-scrollbar{
+    width: 5px;
+    background-color: #d2d2d2;
+}
+.bill-container::-webkit-scrollbar-thumb
+{
+	background-color: #434343;
+	border: 2px solid #555555;
+}
+.bill-container .row-space{
+    display: flex;
+    width: 95%;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.bill-container .row-space h2{
+    margin: 0;
+}
+.text-center{
+    text-align: center;
+    margin-bottom: 20px;
+}

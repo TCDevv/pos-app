@@ -1,0 +1,10 @@
+export const DRINK_CATEGORY = 'Nước Uống';
+export const DESERT_CATEGORY = 'Trang mieng';
+export const HOMEVIEW_MENU = 1;
+export const HOMEVIEW_TABLE = 2;
+export const TABLE_1 = 'danh-sach-ban';
+export const TABLE_2 = 'abc';
+export const PAYMENT_CODE = 1;
+export const TIMEKEEPING_CODE = 2;
+export const ORDERING = 1;
+export const PAYMENTING = 2;
