@@ -7,6 +7,7 @@ import TableProduct from './TableProduct';
 import { ORDERING } from '../utils/constants';
 import Payment from './Payment';
 import { removeOrderTableById } from '../actions/orderActions';
+import { BsArrowUpCircleFill } from 'react-icons/bs';
 
 const Receipt = React.memo(
     ({
@@ -28,6 +29,12 @@ const Receipt = React.memo(
             if (newSelectedTables.length) dispatch(setCurrentTable(newSelectedTables[0]?.id));
             else dispatch(setCurrentTable(null));
         }, [dispatch, selectedTables, currentTable]);
+        const moveToTop = () => {
+            const element = document.getElementById('header');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
 
         const items = useMemo(() => {
             return selectedTables.map((item) => ({
@@ -61,13 +68,20 @@ const Receipt = React.memo(
         ]);
 
         return (
-            <div className='receipt-container'>
+            <div id='receipt-container' className='receipt-container'>
                 <Tabs
                     activeKey={currentTable}
                     items={items}
                     defaultActiveKey={defaultActiveTable}
                     onChange={onTabChanged}
                 />
+                <div className='scroll-up' onClick={moveToTop}>
+                    <BsArrowUpCircleFill
+                        fontSize={30}
+                        filter='drop-shadow(1px 2px 2px rgb(103, 58, 183))'
+                        color='rgb(103, 58, 183)'
+                    />
+                </div>
             </div>
         );
     }

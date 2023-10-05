@@ -40,7 +40,7 @@ const App = () => {
         <div>
             <Router>
                 <Layout>
-                    <Header style={headerStyle}>
+                    <Header id='header' style={headerStyle}>
                         <AppHeader outlet={outlet} />
                     </Header>
                     <Content style={contentStyle}>

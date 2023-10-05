@@ -19,6 +19,12 @@ const AppHeader = ({ outlet }) => {
     const closeDrawer = () => {
         setOpen(false);
     };
+    const scrollToReceipt = () => {
+        const element = document.getElementById('receipt-container');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 
     return (
         <>
@@ -42,7 +48,7 @@ const AppHeader = ({ outlet }) => {
             >
                 <img src='https://cdn-icons-png.flaticon.com/128/2674/2674505.png' height={35} alt='' />
             </Link>
-            <Link className='link-header' to='/order'>
+            <Link className='link-header receipt-menu' onClick={scrollToReceipt}>
                 <img src='https://cdn-icons-png.flaticon.com/128/9640/9640038.png' height={35} alt='' />
             </Link>
             <Drawer title={outlet?.name} placement='left' closable={true} onClose={closeDrawer} open={open}>
