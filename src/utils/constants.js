@@ -8,3 +8,5 @@ export const PAYMENT_CODE = 1;
 export const TIMEKEEPING_CODE = 2;
 export const ORDERING = 1;
 export const PAYMENTING = 2;
+export const CASH = 1;
+export const BANKING = 2;

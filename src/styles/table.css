@@ -2,7 +2,7 @@
     padding: 10px;
 }
 .table-container{
-    height: 70vh;
+    height: 75vh;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;

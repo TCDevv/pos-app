@@ -87,7 +87,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
                     <Button type='primary' className='primary-btn'>
                         Đổi bàn
                     </Button>
-                    <Button danger type='primary' onClick={() => handleRemoveTable()}>
+                    <Button danger type='primary' onClick={handleRemoveTable}>
                         Hủy
                     </Button>
                     <Button type='primary' className='primary-btn'>

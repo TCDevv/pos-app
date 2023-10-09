@@ -7,7 +7,7 @@
     color: rgba(197, 72, 72, 0.853);
 }
 .table-product-container{
-    height: 65vh;
+    height: 70vh;
     display: flex;
     flex-direction: column;
     align-items: center;

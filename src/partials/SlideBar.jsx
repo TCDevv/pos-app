@@ -3,7 +3,9 @@ import { HiOutlineClipboardList } from 'react-icons/hi';
 import { TbFileReport } from 'react-icons/tb';
 import { FiSettings } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import AppFooter from '../partials/Footer';
 import '../styles/slidebar.css';
+import { useSelector } from 'react-redux';
 
 const menuList = [
     {
@@ -45,8 +47,9 @@ const menuList = [
 ];
 
 const SlideBar = () => {
+    const outlet = useSelector((state) => state.outlet);
     return (
-        <>
+        <div className='sidenav-container'>
             <ul>
                 {menuList.map((item) => (
                     <li key={item.id}>
@@ -57,7 +60,8 @@ const SlideBar = () => {
                     </li>
                 ))}
             </ul>
-        </>
+            <AppFooter outlet={outlet || {}} />
+        </div>
     );
 };
 

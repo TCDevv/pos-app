@@ -3,19 +3,23 @@ import { Divider, Input, Select, Checkbox, Button, Modal, Table } from 'antd';
 import '../styles/payment.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeOrderTableById, setOrderProcess } from '../actions/orderActions';
+import { setCurrentTable } from '../actions/currentTable';
 import { ORDERING } from '../utils/constants';
 import { saveToLocalStorage, loadFromLocalStorage } from '../utils/localStorage';
 import { setCurrentProcess } from '../actions/processActions';
-import { convertPrice, getHHmmddMMYY } from '../utils/util';
-import { useCallback, useState } from 'react';
+import { convertPrice, getHHmmddMMYY, generateReceiptCode } from '../utils/util';
+import { useCallback, useEffect, useState } from 'react';
+import { CASH, BANKING } from '../utils/constants';
 
-const Payment = ({ currentTable, currentProductList, selectedTables }) => {
+const Payment = ({ currentTable, currentProductList, selectedTables, handleRemoveTable }) => {
+    const [timeOrder, setTimeOrder] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [timeOrder, setTimeOrder] = useState('');
+    const [timePrintBill, setTimePrintBill] = useState('');
+    const [paymentMethod, setPaymentMethod] = useState(CASH);
     const dispatch = useDispatch();
     const outlet = useSelector((state) => state.outlet);
     const onpenModal = () => {
-        setTimeOrder(getHHmmddMMYY());
+        setTimePrintBill(getHHmmddMMYY());
         setIsModalOpen(true);
     };
     const closeModal = () => {
@@ -28,6 +32,7 @@ const Payment = ({ currentTable, currentProductList, selectedTables }) => {
         },
         [selectedTables]
     );
+
     const columns = [
         {
             title: 'Tên',
@@ -54,16 +59,30 @@ const Payment = ({ currentTable, currentProductList, selectedTables }) => {
     ];
     const doPayment = () => {
         var newData = {
-            time: timeOrder,
-            table: currentTable,
+            code: generateReceiptCode(),
+            timeOrder: timeOrder,
+            timePrintBill: timePrintBill,
             tableName: getTableName(currentTable),
             items: currentProductList,
+            total: currentProductList.reduce((acc, curr) => acc + curr.subtotal, 0),
+            paymentMethod: paymentMethod,
+            id_staff: '',
+            customer: '',
         };
         var orderHistory = loadFromLocalStorage('listOrder') || [];
         saveToLocalStorage('listOrder', [...orderHistory, newData]);
         dispatch(removeOrderTableById(currentTable));
+        const newSelectedTable = selectedTables.filter((item) => item.id !== currentTable);
+        if (newSelectedTable.length) dispatch(setCurrentTable(newSelectedTable[0].id));
+        else dispatch(setCurrentTable(null));
         setIsModalOpen(false);
     };
+
+    useEffect(() => {
+        const timeOrder = loadFromLocalStorage('currentOrder').find((item) => item.table.id === currentTable).timeOrder;
+        setTimeOrder(timeOrder);
+    }, [currentTable]);
+
     return (
         <div className='payment-container'>
             <div className='payment-info'>
@@ -108,14 +127,15 @@ const Payment = ({ currentTable, currentProductList, selectedTables }) => {
                 <span>Phương thức thanh toán</span>
                 <Select
                     style={{ width: 150 }}
-                    value={1}
+                    value={paymentMethod}
+                    onChange={(value) => setPaymentMethod(value)}
                     options={[
                         {
-                            value: 1,
+                            value: CASH,
                             label: 'Tiền mặt',
                         },
                         {
-                            value: 2,
+                            value: BANKING,
                             label: 'Chuyển khoản',
                         },
                     ]}
@@ -155,7 +175,7 @@ const Payment = ({ currentTable, currentProductList, selectedTables }) => {
             </div>
             <Divider />
             <div className='payment-action'>
-                <Button danger type='primary'>
+                <Button danger type='primary' onClick={handleRemoveTable}>
                     Hủy
                 </Button>
                 <Button type='primary' className='primary-btn' onClick={() => onpenModal()}>

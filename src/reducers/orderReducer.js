@@ -1,5 +1,6 @@
 import { ORDERING } from '../utils/constants';
 import { saveToLocalStorage, loadFromLocalStorage } from '../utils/localStorage';
+import { getDateTimeNow } from '../utils/util';
 
 const initialState = loadFromLocalStorage('currentOrder') || [];
 
@@ -12,6 +13,7 @@ const orderReducer = (state = initialState, action) => {
                         table: action.payload,
                         product: [],
                         process: ORDERING,
+                        timeOrder: getDateTimeNow(),
                     },
                     ...state,
                 ]);
@@ -20,6 +22,7 @@ const orderReducer = (state = initialState, action) => {
                         table: action.payload,
                         product: [],
                         process: ORDERING,
+                        timeOrder: getDateTimeNow(),
                     },
                     ...state,
                 ];
@@ -36,6 +39,7 @@ const orderReducer = (state = initialState, action) => {
                             },
                             product: [],
                             process: ORDERING,
+                            timeOrder: getDateTimeNow(),
                         },
                         ...state,
                     ]);
@@ -47,6 +51,7 @@ const orderReducer = (state = initialState, action) => {
                             },
                             product: [],
                             process: ORDERING,
+                            timeOrder: getDateTimeNow(),
                         },
                         ...state,
                     ];

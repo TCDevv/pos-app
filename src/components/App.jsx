@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Layout } from 'antd';
-import AppHeader from '../partials/Header';
-import AppFooter from '../partials/Footer';
-import AppContent from '../partials/Content';
-import { fetchData } from '../actions';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { fetchData } from '../actions';
+import AppContent from '../partials/Content';
+import AppHeader from '../partials/Header';
 
-const { Header, Footer, Content } = Layout;
+const { Header, Content } = Layout;
 
 const headerStyle = {
     background: '#673ab7',
@@ -18,14 +17,9 @@ const headerStyle = {
     padding: '0 20px',
 };
 const contentStyle = {
-    minHeight: 'calc(100vh - 134px)',
+    minHeight: 'calc(100vh - 64px)',
     background: '#673ab7',
     padding: '10px 30px',
-};
-const footerStyle = {
-    height: 70,
-    background: '#673ab7',
-    padding: '10px 50px',
 };
 
 const App = () => {
@@ -46,9 +40,6 @@ const App = () => {
                     <Content style={contentStyle}>
                         <AppContent />
                     </Content>
-                    <Footer style={footerStyle}>
-                        <AppFooter outlet={outlet} />
-                    </Footer>
                 </Layout>
             </Router>
         </div>

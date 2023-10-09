@@ -2,7 +2,7 @@ import '../styles/footer.css';
 
 const AppFooter = ({ outlet }) => {
     return (
-        <>
+        <div>
             <div className='social'>
                 <a>
                     <img src='https://cdn-icons-png.flaticon.com/128/2111/2111646.png' alt='' />
@@ -15,7 +15,7 @@ const AppFooter = ({ outlet }) => {
                 </a>
             </div>
             <div className='info'>Chi nhánh: {outlet?.address}</div>
-        </>
+        </div>
     );
 };
 

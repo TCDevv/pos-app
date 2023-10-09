@@ -51,6 +51,7 @@ const Receipt = React.memo(
                         />
                     ) : (
                         <Payment
+                            handleRemoveTable={handleRemoveTable}
                             currentTable={currentTable}
                             currentProductList={currentProductList}
                             selectedTables={selectedTables}

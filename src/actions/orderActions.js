@@ -1,4 +1,4 @@
-export const setOrderTable = (table = null) => ({
+export const setOrderTable = (table) => ({
     type: 'SET_ORDER_TABLE',
     payload: table,
 });
