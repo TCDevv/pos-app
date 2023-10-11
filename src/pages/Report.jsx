@@ -1,10 +1,10 @@
-import '../styles/report.css';
-import { Row, Col, Table, Modal } from 'antd';
-import { getDate, convertPrice } from '../utils/util';
-import { loadFromLocalStorage } from '../utils/localStorage';
-import { AiFillEye } from 'react-icons/ai';
-import { useSelector } from 'react-redux';
+import { Button, Col, Modal, Row, Table } from 'antd';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import '../styles/report.css';
+import { BANKING } from '../utils/constants';
+import { loadFromLocalStorage } from '../utils/localStorage';
+import { convertPrice, getDate } from '../utils/util';
 
 const Report = () => {
     const data = loadFromLocalStorage('listOrder');
@@ -32,18 +32,11 @@ const Report = () => {
             dataIndex: 'code',
             key: 'code',
             width: 150,
-        },
-        {
-            title: 'Bàn',
-            dataIndex: 'tableName',
-            key: 'tableName',
-            width: 150,
-        },
-        {
-            title: 'Thời gian',
-            key: 'time',
-            dataIndex: 'time',
-            width: 150,
+            render: (value, record) => (
+                <Button type='link' onClick={(event) => showModal(record)}>
+                    {value}
+                </Button>
+            ),
         },
         {
             title: 'Tổng tiền',
@@ -53,9 +46,41 @@ const Report = () => {
             render: (total) => <>{convertPrice(total)}</>,
         },
         {
-            title: '',
-            key: 'action',
-            render: (item, record) => <AiFillEye className='view-icon' onClick={() => showModal(item)} />,
+            title: 'Bàn',
+            dataIndex: 'tableName',
+            key: 'tableName',
+            width: 150,
+        },
+        {
+            title: 'Thời gian order',
+            key: 'timeOrder',
+            dataIndex: 'timeOrder',
+            width: 150,
+        },
+        {
+            title: 'Thời gian xuất bill',
+            key: 'timePrintBill',
+            dataIndex: 'timePrintBill',
+            width: 150,
+        },
+        {
+            title: 'Phương thức thanh toán',
+            key: 'paymentMethod',
+            dataIndex: 'paymentMethod',
+            width: 150,
+            render: (value) => <>{value === BANKING ? 'Chuyển khoản' : 'Tiền mặt'}</>,
+        },
+        {
+            title: 'Khách hàng',
+            key: 'customer',
+            dataIndex: 'customer',
+            width: 150,
+        },
+        {
+            title: 'Nhân viên',
+            key: 'id_staff',
+            dataIndex: 'id_staff',
+            width: 150,
         },
     ];
     const itemColumns = [
@@ -87,23 +112,27 @@ const Report = () => {
             <h3>Báo cáo cuối ngày</h3>
             {getDate()}
             <Row align={'center'} style={{ marginTop: 10, width: '100%' }}>
-                <Col md={16} xs={24}>
+                <Col md={24} xs={24}>
                     <Table columns={columns} dataSource={data} scroll={{ y: '40vh', x: 350 }} />
                 </Col>
             </Row>
-            <Modal open={isModalOpen} onCancel={closeModal} onOk={() => setIsModalOpen(false)}>
+            <Modal open={isModalOpen} onCancel={closeModal} onOk={() => setIsModalOpen(false)} okText='In'>
                 <div className='bill-container'>
                     <h3>{outlet?.name}</h3>
                     <span>{outlet?.address}</span>
                     <h3>Hoá đơn {currentReceipt?.code}</h3>
                     <div className='row-space'>
                         <span>Giờ order:</span>
-                        <span>{currentReceipt?.time}</span>
+                        <span>{currentReceipt?.timeOrder}</span>
                     </div>
                     <Table dataSource={currentReceipt?.items} columns={itemColumns} bordered pagination={false} />
                     <div className='row-space'>
                         <span>Tổng dịch vụ</span>
                         <span>{convertPrice(currentReceipt?.total)}</span>
+                    </div>
+                    <div className='row-space'>
+                        <span>Phương thức thanh toán</span>
+                        <span>{currentReceipt?.paymentMethod === BANKING ? 'Chuyển khoản' : 'Tiền mặt'}</span>
                     </div>
                     <div className='row-space'>
                         <span>Thanh toán</span>

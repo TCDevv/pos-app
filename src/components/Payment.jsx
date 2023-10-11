@@ -1,18 +1,18 @@
+import { Button, Checkbox, Divider, Input, Modal, Select, Table } from 'antd';
+import { useCallback, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { Divider, Input, Select, Checkbox, Button, Modal, Table } from 'antd';
-import '../styles/payment.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeOrderTableById, setOrderProcess } from '../actions/orderActions';
 import { setCurrentTable } from '../actions/currentTable';
-import { ORDERING } from '../utils/constants';
-import { saveToLocalStorage, loadFromLocalStorage } from '../utils/localStorage';
+import { removeOrderTableById, setOrderProcess } from '../actions/orderActions';
 import { setCurrentProcess } from '../actions/processActions';
-import { convertPrice, getHHmmddMMYY, generateReceiptCode } from '../utils/util';
-import { useCallback, useEffect, useState } from 'react';
-import { CASH, BANKING } from '../utils/constants';
+import '../styles/payment.css';
+import { BANKING, CASH, ORDERING } from '../utils/constants';
+import { loadFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
+import { convertPrice, getHHmmddMMYY } from '../utils/util';
 
 const Payment = ({ currentTable, currentProductList, selectedTables, handleRemoveTable }) => {
-    const [timeOrder, setTimeOrder] = useState(null);
+    const timeOrder = loadFromLocalStorage('currentOrder')?.find((item) => item.table.id === currentTable)?.timeOrder;
+    const billCode = loadFromLocalStorage('currentOrder')?.find((item) => item.table.id === currentTable)?.code;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [timePrintBill, setTimePrintBill] = useState('');
     const [paymentMethod, setPaymentMethod] = useState(CASH);
@@ -59,7 +59,7 @@ const Payment = ({ currentTable, currentProductList, selectedTables, handleRemov
     ];
     const doPayment = () => {
         var newData = {
-            code: generateReceiptCode(),
+            code: billCode,
             timeOrder: timeOrder,
             timePrintBill: timePrintBill,
             tableName: getTableName(currentTable),
@@ -77,11 +77,6 @@ const Payment = ({ currentTable, currentProductList, selectedTables, handleRemov
         else dispatch(setCurrentTable(null));
         setIsModalOpen(false);
     };
-
-    useEffect(() => {
-        const timeOrder = loadFromLocalStorage('currentOrder').find((item) => item.table.id === currentTable).timeOrder;
-        setTimeOrder(timeOrder);
-    }, [currentTable]);
 
     return (
         <div className='payment-container'>
@@ -202,6 +197,10 @@ const Payment = ({ currentTable, currentProductList, selectedTables, handleRemov
                     <div className='row-space'>
                         <span>Tổng dịch vụ</span>
                         <span>{convertPrice(currentProductList.reduce((acc, curr) => acc + curr.subtotal, 0))}</span>
+                    </div>
+                    <div className='row-space'>
+                        <span>Phương thức thanh toán</span>
+                        <span>{paymentMethod === BANKING ? 'Chuyển khoản' : 'Tiền mặt'}</span>
                     </div>
                     <div className='row-space'>
                         <span>Thanh toán</span>

@@ -1,6 +1,6 @@
 import { ORDERING } from '../utils/constants';
 import { saveToLocalStorage, loadFromLocalStorage } from '../utils/localStorage';
-import { getDateTimeNow } from '../utils/util';
+import { getHHmmddMMYY, generateReceiptCode } from '../utils/util';
 
 const initialState = loadFromLocalStorage('currentOrder') || [];
 
@@ -13,7 +13,8 @@ const orderReducer = (state = initialState, action) => {
                         table: action.payload,
                         product: [],
                         process: ORDERING,
-                        timeOrder: getDateTimeNow(),
+                        timeOrder: getHHmmddMMYY(),
+                        code: generateReceiptCode(),
                     },
                     ...state,
                 ]);
@@ -22,7 +23,8 @@ const orderReducer = (state = initialState, action) => {
                         table: action.payload,
                         product: [],
                         process: ORDERING,
-                        timeOrder: getDateTimeNow(),
+                        timeOrder: getHHmmddMMYY(),
+                        code: generateReceiptCode(),
                     },
                     ...state,
                 ];
@@ -39,7 +41,8 @@ const orderReducer = (state = initialState, action) => {
                             },
                             product: [],
                             process: ORDERING,
-                            timeOrder: getDateTimeNow(),
+                            timeOrder: getHHmmddMMYY(),
+                            code: generateReceiptCode(),
                         },
                         ...state,
                     ]);
@@ -51,7 +54,8 @@ const orderReducer = (state = initialState, action) => {
                             },
                             product: [],
                             process: ORDERING,
-                            timeOrder: getDateTimeNow(),
+                            timeOrder: getHHmmddMMYY(),
+                            code: generateReceiptCode(),
                         },
                         ...state,
                     ];
@@ -76,6 +80,9 @@ const orderReducer = (state = initialState, action) => {
                 {
                     table: action.payload.table,
                     product: action.payload.products,
+                    process: ORDERING,
+                    timeOrder: getHHmmddMMYY(),
+                    code: generateReceiptCode(),
                 },
             ]);
             return [
@@ -83,6 +90,9 @@ const orderReducer = (state = initialState, action) => {
                 {
                     table: action.payload.table,
                     product: action.payload.products,
+                    process: ORDERING,
+                    timeOrder: getHHmmddMMYY(),
+                    code: generateReceiptCode(),
                 },
             ];
         case 'SET_ORDER_PROCESS':
