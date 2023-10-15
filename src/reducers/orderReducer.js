@@ -99,6 +99,15 @@ const orderReducer = (state = initialState, action) => {
             state.find((item) => item.table.id === action.payload.tableId).process = action.payload.process;
             saveToLocalStorage('currentOrder', state);
             return state;
+        case 'SET_BILL_BEP':
+            const listProducts = state.find((item) => item.table.id === action.payload.tableId).product;
+            if (listProducts.length) {
+                listProducts.forEach((item) => {
+                    item.billBep = item.quantity;
+                });
+            }
+            saveToLocalStorage('currentOrder', state);
+            return state;
         default:
             return state;
     }

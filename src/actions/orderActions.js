@@ -27,3 +27,8 @@ export const setOrderProcess = (process, tableId) => ({
     type: 'SET_ORDER_PROCESS',
     payload: { process, tableId },
 });
+
+export const setBillBep = (products, tableId) => ({
+    type: 'SET_BILL_BEP',
+    payload: { products, tableId },
+});

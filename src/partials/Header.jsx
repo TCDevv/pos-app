@@ -1,6 +1,6 @@
 import { Drawer } from 'antd';
 import { useState } from 'react';
-import { AiFillPlusCircle } from 'react-icons/ai';
+import { AiFillPlusCircle, AiOutlineHistory } from 'react-icons/ai';
 import { MdMenu } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -54,10 +54,16 @@ const AppHeader = ({ outlet }) => {
             <Drawer title={outlet?.name} placement='left' closable={true} onClose={closeDrawer} open={open}>
                 <SlideBar />
             </Drawer>
-            <Link to='/' className='receipt' onClick={() => dispatch(setOrderTable())}>
-                <AiFillPlusCircle className='plus-icon' />
-                Hóa đơn
-            </Link>
+            <div className='right-menu'>
+                <Link to='/report' className='item history'>
+                    <AiOutlineHistory className='history-icon' />
+                    Lịch sử
+                </Link>
+                <Link to='/' className='item receipt' onClick={() => dispatch(setOrderTable())}>
+                    <AiFillPlusCircle className='plus-icon' />
+                    Hóa đơn
+                </Link>
+            </div>
         </>
     );
 };

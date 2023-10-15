@@ -7,7 +7,11 @@
 .menu-icon:hover{
    color: #c09cff;
 }
-.receipt{
+.right-menu{
+   display: flex;
+   gap: 20px;
+}
+.right-menu .item{
    color: #fff;
    display: flex;
    align-items: center;
@@ -15,10 +19,10 @@
    gap: 5px;
    cursor: pointer;
 }
-.receipt:hover{
+.right-menu .item:hover{
    color: #c09cff;
 }
-.receipt .plus-icon{
+.right-menu .item .plus-icon,.history-icon{
    font-size: 20px;
 }
 .link-header{
@@ -32,5 +36,8 @@
 @media only screen and (max-width: 600px) {
    .receipt-menu{
       display: flex;
+   }
+   .right-menu .history{
+      display: none;
    }
  }

@@ -11,6 +11,9 @@
     display: none;
 }
 @media only screen and (max-width: 600px) {
+    .receipt-container{
+        max-height: 100vh;
+    }
     .scroll-up{
         display: block;
     }

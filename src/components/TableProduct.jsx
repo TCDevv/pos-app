@@ -5,10 +5,10 @@ import { convertPrice } from '../utils/util';
 import { Space, Button, InputNumber } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { PAYMENTING } from '../utils/constants';
-import { setOrderProcess } from '../actions/orderActions';
+import { setBillBep, setOrderProcess } from '../actions/orderActions';
 import { setCurrentProcess } from '../actions/processActions';
 import { loadFromLocalStorage } from '../utils/localStorage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handleRemoveTable }) => {
     const timeOrder = loadFromLocalStorage('currentOrder')?.find((item) => item.table.id === currentTable)?.timeOrder;
@@ -16,12 +16,37 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
     const outlet = useSelector((state) => state.outlet);
     const dispatch = useDispatch();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dataBillBep, setDataBillBep] = useState([]);
     const onpenModal = () => {
         setIsModalOpen(true);
     };
     const closeModal = () => {
         setIsModalOpen(false);
     };
+    const doBillBep = () => {
+        setIsModalOpen(false);
+        dispatch(setBillBep(data, currentTable));
+        setDataBillBep([]);
+    };
+    const checkCancelDisabled = () => {
+        var result = false;
+        data.forEach((item) => {
+            if (item.billBep) {
+                result = true;
+            }
+        });
+        return result;
+    };
+    useEffect(() => {
+        var newData = [];
+        data.forEach((item) => {
+            if ((item.billBep && item.quantity > item.billBep) || !item.billBep) {
+                item.quantityBep = item.quantity - (item.billBep || 0);
+                newData.push(item);
+            }
+        });
+        setDataBillBep(newData);
+    }, [data]);
 
     const columns = [
         {
@@ -48,7 +73,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
                     <InputNumber
                         style={{ width: 70 }}
                         value={quantity}
-                        min={1}
+                        min={record.billBep || 0}
                         onChange={(value) => changeQuantity(value, record, index)}
                     />
                 </>
@@ -79,9 +104,8 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
             title: '',
             key: 'action',
             fixed: 'right',
-            render: (item, record) => (
-                <AiTwotoneDelete className='icon-delete' onClick={() => removeProduct(record.id)} />
-            ),
+            render: (item, record) =>
+                !record.billBep && <AiTwotoneDelete className='icon-delete' onClick={() => removeProduct(record.id)} />,
         },
     ];
 
@@ -102,9 +126,9 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
         },
         {
             title: 'Số lượng',
-            dataIndex: 'quantity',
-            key: 'quantity',
             width: 100,
+            dataIndex: 'quantityBep',
+            key: 'quantityBep',
         },
     ];
 
@@ -122,7 +146,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
                     <Button type='primary' className='primary-btn'>
                         Đổi bàn
                     </Button>
-                    <Button danger type='primary' onClick={handleRemoveTable}>
+                    <Button danger type='primary' onClick={handleRemoveTable} disabled={checkCancelDisabled()}>
                         Hủy
                     </Button>
                     <Button type='primary' className='primary-btn'>
@@ -148,6 +172,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
                 <Modal
                     open={isModalOpen}
                     onCancel={closeModal}
+                    onOk={doBillBep}
                     okText='In'
                     cancelText='Hủy'
                     okButtonProps={{ style: { background: 'rgb(103, 58, 183)' } }}
@@ -160,7 +185,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
                             <span>Giờ order:</span>
                             <span>{timeOrder}</span>
                         </div>
-                        <Table dataSource={data} columns={columnForPrint} bordered pagination={false} />
+                        <Table dataSource={dataBillBep} columns={columnForPrint} bordered pagination={false} />
                     </div>
                 </Modal>
             </div>
