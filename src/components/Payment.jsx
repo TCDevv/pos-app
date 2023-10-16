@@ -189,6 +189,7 @@ const Payment = ({ currentTable, currentProductList, selectedTables, handleRemov
                     <h3>{outlet?.name}</h3>
                     <span>{outlet?.address}</span>
                     <h3>Hoá đơn {getTableName(currentTable)}</h3>
+                    <span>Khách hàng:</span>
                     <div className='row-space'>
                         <span>Giờ order:</span>
                         <span>{timeOrder}</span>
@@ -197,6 +198,10 @@ const Payment = ({ currentTable, currentProductList, selectedTables, handleRemov
                     <div className='row-space'>
                         <span>Tổng dịch vụ</span>
                         <span>{convertPrice(currentProductList.reduce((acc, curr) => acc + curr.subtotal, 0))}</span>
+                    </div>
+                    <div className='row-space'>
+                        <span>Giảm giá</span>
+                        <span>0</span>
                     </div>
                     <div className='row-space'>
                         <span>Phương thức thanh toán</span>

@@ -2,7 +2,7 @@ import { Table, Modal } from 'antd';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import '../styles/tableProduct.css';
 import { convertPrice } from '../utils/util';
-import { Space, Button, InputNumber } from 'antd';
+import { Space, Button, InputNumber, Popconfirm } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { PAYMENTING } from '../utils/constants';
 import { setBillBep, setOrderProcess } from '../actions/orderActions';
@@ -146,9 +146,22 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
                     <Button type='primary' className='primary-btn'>
                         Đổi bàn
                     </Button>
-                    <Button danger type='primary' onClick={handleRemoveTable} disabled={checkCancelDisabled()}>
-                        Hủy
-                    </Button>
+                    {checkCancelDisabled() ? (
+                        <Popconfirm
+                            title='Huỷ hóa đơn'
+                            description='Hóa đơn này đã báo bếp và chưa thanh toán, bạn có muốn hủy không?'
+                            onConfirm={handleRemoveTable}
+                            okText='Hủy'
+                            cancelText='Không hủy'
+                        >
+                            <Button danger>Delete</Button>
+                        </Popconfirm>
+                    ) : (
+                        <Button danger type='primary' onClick={handleRemoveTable}>
+                            Hủy
+                        </Button>
+                    )}
+
                     <Button type='primary' className='primary-btn'>
                         T.T nhanh
                     </Button>

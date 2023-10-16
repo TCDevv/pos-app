@@ -121,6 +121,7 @@ const Report = () => {
                     <h3>{outlet?.name}</h3>
                     <span>{outlet?.address}</span>
                     <h3>Hoá đơn {currentReceipt?.code}</h3>
+                    <span>Khách hàng: {currentReceipt?.customer}</span>
                     <div className='row-space'>
                         <span>Giờ order:</span>
                         <span>{currentReceipt?.timeOrder}</span>
@@ -129,6 +130,10 @@ const Report = () => {
                     <div className='row-space'>
                         <span>Tổng dịch vụ</span>
                         <span>{convertPrice(currentReceipt?.total)}</span>
+                    </div>
+                    <div className='row-space'>
+                        <span>Giảm giá</span>
+                        <span>0</span>
                     </div>
                     <div className='row-space'>
                         <span>Phương thức thanh toán</span>
