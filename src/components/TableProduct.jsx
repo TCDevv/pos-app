@@ -154,7 +154,7 @@ const TableProduct = ({ data, removeProduct, currentTable, changeQuantity, handl
                             okText='Hủy'
                             cancelText='Không hủy'
                         >
-                            <Button danger>Delete</Button>
+                            <Button danger>Hủy</Button>
                         </Popconfirm>
                     ) : (
                         <Button danger type='primary' onClick={handleRemoveTable}>

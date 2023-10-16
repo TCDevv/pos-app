@@ -1,4 +1,4 @@
-import { Button, Checkbox, Divider, Input, Modal, Select, Table } from 'antd';
+import { Button, Checkbox, Divider, Input, Modal, Select, Table, Popconfirm } from 'antd';
 import { useCallback, useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +24,15 @@ const Payment = ({ currentTable, currentProductList, selectedTables, handleRemov
     };
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+    const checkCancelDisabled = () => {
+        var result = false;
+        currentProductList.forEach((item) => {
+            if (item.billBep) {
+                result = true;
+            }
+        });
+        return result;
     };
     const getTableName = useCallback(
         (tableId) => {
@@ -170,9 +179,21 @@ const Payment = ({ currentTable, currentProductList, selectedTables, handleRemov
             </div>
             <Divider />
             <div className='payment-action'>
-                <Button danger type='primary' onClick={handleRemoveTable}>
-                    Hủy
-                </Button>
+                {checkCancelDisabled() ? (
+                    <Popconfirm
+                        title='Huỷ hóa đơn'
+                        description='Hóa đơn này đã báo bếp và chưa thanh toán, bạn có muốn hủy không?'
+                        onConfirm={handleRemoveTable}
+                        okText='Hủy'
+                        cancelText='Không hủy'
+                    >
+                        <Button danger>Hủy</Button>
+                    </Popconfirm>
+                ) : (
+                    <Button danger type='primary' onClick={handleRemoveTable}>
+                        Hủy
+                    </Button>
+                )}
                 <Button type='primary' className='primary-btn' onClick={() => onpenModal()}>
                     Thanh toán
                 </Button>
