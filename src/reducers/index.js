@@ -1,15 +1,14 @@
-import { combineReducers } from 'redux';
 import cartReducer from './cartReducer';
+import currentTableReducer from './currentTableReducer';
+import homeViewReducer from './homeViewReducer';
+import invoiceReducer from './invoiceReducer';
+import orderReducer from './orderReducer';
 import outletReducer from './outletReducer';
+import processReducer from './processReducer';
 import productReducer from './productReducer';
 import tableReducer from './tableReducer';
-import homeViewReducer from './homeViewReducer';
-import orderReducer from './orderReducer';
-import currentTableReducer from './currentTableReducer';
-import processReducer from './processReducer';
-import invoiceReducer from './invoiceReducer';
 
-const rootReducer = combineReducers({
+const reducer = {
     cart: cartReducer,
     outlet: outletReducer,
     products: productReducer,
@@ -19,6 +18,6 @@ const rootReducer = combineReducers({
     currentTable: currentTableReducer,
     process: processReducer,
     invoice: invoiceReducer,
-});
+};
 
-export default rootReducer;
+export default reducer;
